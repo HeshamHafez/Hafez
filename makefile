@@ -1,16 +1,18 @@
 cc = gcc
-src = $(wildcard *.c)
+src_files = $(wildcard *.c)
 #obj1_files = $(wildcard *.o) ERROR!!!
 obj1_files = DIO.o LCD.o main.o
 dep_files = DIO.d LCD.d main.d
 obj2_files = taher-zaglol-abdo-hafez.o
-link_target = app.exe
+link_target = main.exe
 clean_target = $(link_target) $(obj1_files)
 
 #paths
 vpath %.c ./src
 inc_path = ./inc
 dep_path = ./dependencies
+
+-include $(dep_files)
 
 #compile 
 %.o : %.c
@@ -19,7 +21,7 @@ dep_path = ./dependencies
 	mv *.d $(dep_path)
 
 #link
-app : $(obj1_files) $(obj2_files)
+$(link_target): $(obj1_files) $(obj2_files)
 	$(cc) $^ -o $@
 
 clean:
